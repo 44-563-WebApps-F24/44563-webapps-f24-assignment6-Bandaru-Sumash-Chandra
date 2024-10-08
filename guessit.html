@@ -1,77 +1,115 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>lets play colour game</title>
-    </head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let's Play Color Game</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        h1 {
+            color: #343a40;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        #plantImage {
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        #plantImage:hover {
+            transform: scale(1.05);
+        }
+        .btn-check:focus + .btn-primary {
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+    </style>
+</head>
+<body>
     
-    <body>
-    
-        <h2>Guess the Color Game - Sumash Chandra Bandaru</h2>
+    <h1>Guess the Color - Sumash Chandra Bandaru</h1>
 
- <form>
+    <div class="container">
+        <form>
+            <div class="mb-3">
+                <label for="secret_color" class="form-label">Secret Color</label>
+                <input type="text" id="secret_color" class="form-control" value="Red" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="guess_color" class="form-label">Enter Your Guess</label>
+                <input type="text" id="guess_color" class="form-control" placeholder="Type your guess here">
+            </div>
+            <button type="button" class="btn btn-primary" onclick="checkColor()">Check the Color</button>
+            <p id="result" class="mt-3"></p>
+        </form>
+    </div>
+    
+    <!-- Image Section -->
+    <div class="container mt-5">
+        <div class="text-center">
+            <img id="plantImage" src="sun.jpeg" width="200" height="200" onclick="nextImage()" class="img-thumbnail">
+        </div>
+    </div>
+
+    <!-- Reset Game Button -->
+    <div class="text-center mt-4">
+        <button class="btn btn-secondary" onclick="resetGame()">Reset Game</button>
+    </div>
+
+    <script>
+        let attempts = 0;
+        let wrong = 0;
   
-    <label for="mystery_color">Guess the color</label>
-    <input type="password" id="mystery_color" value="Red"><br><br>
-
-    <label for="color_guess">Enter a guess</label>
-    <input type="text" id="color_guess"><br><br>
-
+        function checkColor() {
+            const secretColor = document.getElementById("secret_color").value;
+            const guessedColor = document.getElementById("guess_color").value;
     
-    <input type="button" value="Check the color" onclick="processColor()">
-</form>
-
-
-<p id="result_display">Attempts: 0 | Wrong: 0</p>
-
-<div>
-    <img id="plant_image" src="sun.jpeg" width="200" height="200" onclick="nextImage()">
-</div>
-
-<script>
-  
-    let attempts = 0;
-    let wrong = 0;
-
-    function processColor() {
-
-        const mysteryColor = document.getElementById("mystery_color").value;
-
-        const colorGuess = document.getElementById("color_guess").value;
-
-        attempts++;
-
-        if (colorGuess.toLowerCase() !== mysteryColor.toLowerCase()) {
-          
-            alert("That was not it");
-        } else {
-            alert("You got it!");
+            attempts++;
+            if (guessedColor.toLowerCase() !== secretColor.toLowerCase()) {
+                wrong++;
+                alert("That was not it. Try again!");
+            } else {
+                alert("Congratulations! You got it!");
+            }
+    
+            document.getElementById("result").innerHTML = `Attempts: ${attempts} | Wrong: ${wrong}`;
         }
 
-  
-        document.getElementById("result_display").innerHTML = `Attempts: ${attempts} | Wrong: ${wrong}`;
-    }
-
-    let showing = 1;
-
-   
-    function nextImage() {
-        switch (showing) {
-            case 1:
-                document.getElementById("plant_image").src = "p2.jpeg";
-                showing = 2;
-                break;
-            case 2:
-                document.getElementById("plant_image").src = "p3.jpeg";
-                showing = 3;
-                break;
-            case 3:
-                document.getElementById("plant_image").src = "sun.jpg";
-                showing = 1;
-                break;
+        function resetGame() {
+            attempts = 0;
+            wrong = 0;
+            document.getElementById("guess_color").value = '';
+            document.getElementById("result").innerHTML = '';
+            alert("Game has been reset. Good luck!");
         }
-    }
-</script>
 
+        let showing = 1;
+    
+        function nextImage() {
+            switch (showing) {
+                case 1:
+                    document.getElementById("plantImage").src = "sun.jpeg"; // Replace with your image path
+                    showing = 2;
+                    break;
+                case 2:
+                    document.getElementById("plantImage").src = "p2.jpeg"; // Replace with your image path
+                    showing = 3;
+                    break;
+                case 3:
+                    document.getElementById("plantImage").src = "p3.jpeg"; // Replace with your image path
+                    showing = 1;
+                    break;
+            }
+        }
+    </script>
+    
 </body>
-
 </html>

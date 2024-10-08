@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lunch Order by Sumash</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        h2 {
+            color: #007bff;
+        }
+        .form-check-label {
+            font-weight: 600;
+        }
+        .btn-primary, .btn-secondary {
+            width: 100%;
+            margin-top: 10px;
+        }
+        #orderResult, #updatedOrderResult {
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #007bff;
+            background-color: #e9f7ff;
+            border-radius: 5px;
+        }
+        .container {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<h2 class="text-center mt-4">Sumash Orders a Lunch</h2>
+<div class="container mt-4">
+    <form>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="beverage" value="beverage">
+            <label class="form-check-label" for="beverage">Drink</label>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="snack" value="snack">
+            <label class="form-check-label" for="snack">Side</label>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="dineIn" value="dineIn">
+            <label class="form-check-label" for="dineIn">Eat in</label>
+        </div>
+        
+        <button type="button" class="btn btn-primary" onclick="startLunch()">Start a lunch order</button>
+    </form>
+    <p id="orderResult"></p>
+</div>
+
+<script>
+    let my_lunch = {};
+
+    function startLunch() {
+        my_lunch = {};  
+
+        my_lunch.beverage = document.getElementById("beverage").checked;
+        my_lunch.snack = document.getElementById("snack").checked;
+        my_lunch.dineIn = document.getElementById("dineIn").checked;
+
+        document.getElementById("orderResult").innerHTML = 
+            `Your lunch order: Drink: ${my_lunch.beverage}, Side: ${my_lunch.snack}, Eat in: ${my_lunch.dineIn}`;
+    }
+</script>
+
+<div class="container mt-4">
+    <form>
+        <div class="mb-3">
+            <label for="propertyName" class="form-label">Enter property:</label>
+            <input type="text" id="propertyName" class="form-control" value="entree">
+        </div>
+        <div class="mb-3">
+            <label for="propertyValue" class="form-label">Set it to:</label>
+            <input type="text" id="propertyValue" class="form-control">
+        </div>
+    
+        <button type="button" class="btn btn-secondary" onclick="updateLunch()">Update the lunch</button>
+    </form>
+    
+    <p id="updatedOrderResult"></p>
+</div>
+
+<script>
+    function updateLunch() {
+        const propertyName = document.getElementById("propertyName").value;
+        const propertyValue = document.getElementById("propertyValue").value;
+
+        my_lunch[propertyName] = propertyValue;
+
+        document.getElementById("updatedOrderResult").innerHTML = JSON.stringify(my_lunch);
+    }
+</script>
+
+</body>
+</html>
